@@ -7,19 +7,10 @@
         </div>
         <div class="card-body p-4">
           <ul class="list-group">
-            <li class="list-group-item mb-2 border py-0 rounded-3">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control border-0 py-3 shadow-none"
-                  placeholder="Add new task"
-                  #titleInput
-                />
-                <button class="btn border-0" (click)="onClick(titleInput)">
-                  <i class="fa-solid fa-square-plus fa-xl"></i>
-                </button>
-              </div>
-            </li>
+            <button mt-1 mb-2 type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add Todo
+            </button>
+            <li class="list-group-item mb-2 border py-0 rounded-3"></li>
             <li
               class="list-group-item mb-2 border py-2 rounded-3"
               *ngFor="let item of todos"
@@ -41,6 +32,30 @@
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add your new Todo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input
+                  type="text"
+                  class="form-control border-0 py-3 shadow-none"
+                  placeholder="Add new Todo"
+                  #titleInput
+                />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onClick(titleInput)">Add Todo</button>
       </div>
     </div>
   </div>
