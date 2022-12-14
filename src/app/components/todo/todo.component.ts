@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs';
 import { TodoService } from '../../shared/todo.service';
+
+interface Todo {
+  id: string;
+  title: string;
+  isDone: boolean;
+}
 
 @Component({
   selector: 'app-todo',
@@ -9,8 +14,11 @@ import { TodoService } from '../../shared/todo.service';
 })
 export class TodoComponent implements OnInit {
   todos: any[] = [];
-  displayTodos: any[] = [];
+  displayTodos: Todo[] = [];
+  thisPageTodos: Todo[] = [];
   hideCompletedTodos: boolean = false;
+  pageSize: number = 10;
+  indexFrom: number = 0;
 
   constructor(private todoService: TodoService) {}
 
@@ -51,5 +59,33 @@ export class TodoComponent implements OnInit {
     this.displayTodos = this.hideCompletedTodos
       ? this.todos.filter((todo) => !todo.isDone)
       : this.todos;
+
+    this.thisPageTodos = this.displayTodos.slice(
+      this.indexFrom,
+      this.indexFrom + this.pageSize
+    );
+  }
+
+  onPrevPage() {
+    this.indexFrom -= this.pageSize;
+    this.setDisplayTodos();
+  }
+
+  onNextPage() {
+    this.indexFrom += this.pageSize;
+    this.setDisplayTodos();
+  }
+
+  getPrevPageDisabled() {
+    return this.indexFrom === 0;
+  }
+
+  getNextPageDisabled() {
+    return this.indexFrom + this.pageSize >= this.displayTodos.length;
+  }
+
+  changePageSize(newPageSize: string) {
+    this.pageSize = Number(newPageSize);
+    this.setDisplayTodos();
   }
 }
